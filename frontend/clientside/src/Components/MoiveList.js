@@ -39,34 +39,43 @@ class MovieList extends Component {
 
         this.state = {
 
-            movies: []
+            search: '',
+            movie:{ 
+                    title: '',
+                    image: '',
+                    year: '',
+                }
         }
         
     }
 
+    myChangeHandler = (event) => {
+
+        this.setState({search: event.target.value[0]})
+    }
    
 
-
-   handleSubmit = event => {
-
-        event.preventDefault();
-
-        axios.get(`http://www.omdbapi.com/?apikey=8f73e7a1&`).then(res => {
     
-        console.log(res);
-    
-            this.setState({ movies: res.data});
+
+   componentDidMount() {
+
+    var urlEncodedSearchString = encodeURIComponent(this.search);
+       
+    axios.get(`http://www.omdbapi.com/?apikey=8f73e7a1&${urlEncodedSearchString}`) // returns a promise
+
+    .then(res => {
+        console.log(res)
+        this.setState({
+            movie:res.data
         })
-    
-        
-
+    })
    }
 
 
    
 
     render(props){
-
+                const {movies} = this.state;
         return(
 
             <div>
@@ -90,7 +99,10 @@ class MovieList extends Component {
                     </tbody>
                 </table>
 
-                <input style={{
+                <Input 
+                type='text' 
+                
+                style={{
                     fontSize:24,
                     display:  'block',
                     width: '25%',
@@ -98,6 +110,9 @@ class MovieList extends Component {
                     paddingBottom: 8,
                     paddingLeft:16
                 }} placeholder="Search movie here"/>
+                <Button onClick={this.componentDidMount}>
+                        Search
+                </Button>
 
             </div>
         )
