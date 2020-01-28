@@ -39,43 +39,51 @@ class MovieList extends Component {
 
         this.state = {
 
-            search: '',
-            movie:{ 
-                    title: '',
-                    image: '',
-                    year: '',
-                }
-        }
+            title: " ",
+            movies: [{}]
+        };
+
+        this.onSubmit = this.onSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         
     }
 
-    myChangeHandler = (event) => {
+    
+   handleChange = (e) => {
 
-        this.setState({search: event.target.value[0]})
-    }
-   
+    e.preventDefault();
+
+    this.setState({title: e.target.value})
+    
+   }
 
     
 
-   componentDidMount() {
+   onSubmit() {
+  
 
-    var urlEncodedSearchString = encodeURIComponent(this.search);
-       
-    axios.get(`http://www.omdbapi.com/?apikey=8f73e7a1&${urlEncodedSearchString}`) // returns a promise
+    axios.get(`http://www.omdbapi.com/?s=${this.state.title}=&apikey=8f73e7a1`) // returns a promise
 
-    .then(res => {
+        .then(res => {
         console.log(res)
         this.setState({
-            movie:res.data
-        })
+            movies:res.data.Search
+        });
+
+       
     })
+       
+    
    }
 
 
    
 
-    render(props){
-                const {movies} = this.state;
+    render(){
+               
+        const { movies } = this.state;
+        
+       
         return(
 
             <div>
@@ -98,21 +106,34 @@ class MovieList extends Component {
                         </tr>
                     </tbody>
                 </table>
-
-                <Input 
-                type='text' 
+                <form className="form" id="addItemForm">
+                        <Input 
+                        type="text"
+                        className="input"
+                        id="addInput"
+                        onChange={this.handleChange}
+                        value={this.state.title}
+                        
+                        style={{
+                            fontSize:24,
+                            display:  'block',
+                            width: '25%',
+                            paddingTop: 8,
+                            paddingBottom: 8,
+                            paddingLeft:16
+                        }} placeholder="Search movie here"/>
+                        <Button onClick={this.onSubmit}>
+                                Search
+                        </Button>
+                </form>
                 
-                style={{
-                    fontSize:24,
-                    display:  'block',
-                    width: '25%',
-                    paddingTop: 8,
-                    paddingBottom: 8,
-                    paddingLeft:16
-                }} placeholder="Search movie here"/>
-                <Button onClick={this.componentDidMount}>
-                        Search
-                </Button>
+
+                <section className="section">
+                    <ul>
+                        
+                    </ul>
+
+                </section>
 
             </div>
         )
