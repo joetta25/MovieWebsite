@@ -39,49 +39,42 @@ class MovieList extends Component {
 
         this.state = {
 
-            title: " ",
-            movies: [{}]
+            search: " ",
+            results: {}
         };
-
-        this.onSubmit = this.onSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
         
     }
 
     
-   handleChange = (e) => {
-
-    e.preventDefault();
-
-    this.setState({title: e.target.value})
-    
-   }
-
-    
-
-   onSubmit() {
+   onSubmit = e => {
   
+        e.preventDefault();
 
-    axios.get(`http://www.omdbapi.com/?s=${this.state.title}=&apikey=8f73e7a1`) // returns a promise
+    axios.get(`http://www.omdbapi.com/?s=${this.state.search}=&apikey=8f73e7a1`) // returns a promise
 
         .then(res => {
-        console.log(res)
-        this.setState({
-            movies:res.data.Search
+            console.log(res);
+            this.setState({...this.state, results: {...res}});
         });
 
        
-    })
+    };
+    onChange = (e) => {
+
+        
+    
+        this.setState({ ...this.state, search: e.target.value});
+        
+    };
        
     
-   }
+   
 
 
    
 
     render(){
                
-        const { movies } = this.state;
         
        
         return(
@@ -106,13 +99,13 @@ class MovieList extends Component {
                         </tr>
                     </tbody>
                 </table>
-                <form className="form" id="addItemForm">
+                <form className="form" id="addItemForm" onSubmit={this.onSubmit}>
                         <Input 
                         type="text"
                         className="input"
                         id="addInput"
-                        onChange={this.handleChange}
-                        value={this.state.title}
+                        onChange={this.onChange}
+                        
                         
                         style={{
                             fontSize:24,
@@ -122,7 +115,7 @@ class MovieList extends Component {
                             paddingBottom: 8,
                             paddingLeft:16
                         }} placeholder="Search movie here"/>
-                        <Button onClick={this.onSubmit}>
+                        <Button >
                                 Search
                         </Button>
                 </form>
