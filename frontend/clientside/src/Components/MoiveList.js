@@ -10,11 +10,11 @@ font-family: sans-serif;
 font-size: 1.3rem;
 border: none;
 border-radius: 5px;
-padding: 7px 10px;
+padding: 3px 5px;
 background: #591216;
 color: black;
-padding-top: 5px;
-margin-top: 20px;
+padding-top: 6px;
+
 
 &:hover{
   background: #70324F;
@@ -24,10 +24,11 @@ margin-top: 20px;
 `;
 
 const Input = styled.input`
-
+margin-top: 50px;
+margin-right: 5px;
 width: 25%;
-padding-right: 30px;
-padding: 7px 10px;
+padding-right: 10px;
+padding-top: 12px;
 color: black;
 `;
 
@@ -39,8 +40,10 @@ class MovieList extends Component {
 
         this.state = {
 
+            isloading: true,
             search: " ",
-            results: {}
+            results: [],
+            error: null
         };
         
     }
@@ -52,11 +55,28 @@ class MovieList extends Component {
 
     axios.get(`http://www.omdbapi.com/?s=${this.state.search}=&apikey=8f73e7a1`) // returns a promise
 
-        .then(res => {
-            console.log(res);
-            this.setState({...this.state, results: {...res}});
-        });
+    .then(response =>
 
+            response.data.Search.map(movie => ({
+              Title:  `${movie.Title}`,
+              Year: `${movie.Year}`,
+              imdbID: `${movie.Type}`,
+              Poster: `${movie.Poster}`
+            }))
+
+            
+      )
+        .then(results => {
+            console.log(results);
+            this.setState({
+                results,
+                isloading:false
+            });
+        })
+         .catch((error) => this.setState({error,isloading: false}));
+        
+
+        
        
     };
     onChange = (e) => {
@@ -75,7 +95,7 @@ class MovieList extends Component {
 
     render(){
                
-        
+        const{ isLoading,results} = this.state;
        
         return(
 
@@ -90,9 +110,6 @@ class MovieList extends Component {
                     <tbody>
                         <tr>
                             <td>
-                               <img src=""/>
-                            </td>
-                            <td>
                                 <h1>MovieDB Search</h1>
                                 
                             </td>
@@ -105,16 +122,7 @@ class MovieList extends Component {
                         className="input"
                         id="addInput"
                         onChange={this.onChange}
-                        
-                        
-                        style={{
-                            fontSize:24,
-                            display:  'block',
-                            width: '25%',
-                            paddingTop: 8,
-                            paddingBottom: 8,
-                            paddingLeft:16
-                        }} placeholder="Search movie here"/>
+                        placeholder="Search movie here"/>
                         <Button >
                                 Search
                         </Button>
@@ -122,8 +130,29 @@ class MovieList extends Component {
                 
 
                 <section className="section">
+                    <h1>Random User</h1>
+                      
                     <ul>
-                        
+                        {!isLoading ? (
+                        results.map(function(result,index) {
+                            const { Title, Year, imdbID, Poster } = result;
+                            return (
+                            <div key={index}>
+                               <div>
+                                    <p>{Title}</p>
+                                    <div>
+                                    <img src={Poster} alt={Title} />
+                                    </div>
+                                    <p>{Year}</p>
+                                    <p>{imdbID}</p>
+                                    <hr />
+                               </div>
+                            </div>
+                            );
+                        })
+                        ) : (
+                        <p>Loading...</p>
+                        )}
                     </ul>
 
                 </section>
