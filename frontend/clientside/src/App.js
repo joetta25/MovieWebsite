@@ -16,9 +16,11 @@ body {
 
 function App() {
   return (
+
     <ThemeProvider theme={{ fontfamily: 'Helvetica Neue'}}>
       <React.Fragment>
           <GlobalStyles blackcolor/>
+
           <MovieList/>
     </React.Fragment>
     </ThemeProvider>

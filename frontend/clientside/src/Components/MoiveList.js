@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import SaveMovies from './SavedMovies'
 
 
 
@@ -86,10 +87,7 @@ class MovieList extends Component {
         this.setState({ ...this.state, search: e.target.value});
         
     };
-       
     
-   
-
 
    
 
@@ -116,6 +114,8 @@ class MovieList extends Component {
                         </tr>
                     </tbody>
                 </table>
+
+                
                 <form className="form" id="addItemForm" onSubmit={this.onSubmit}>
                         <Input 
                         type="text"
@@ -128,13 +128,27 @@ class MovieList extends Component {
                         </Button>
                 </form>
                 
+                <Router>
+                    <div>
+                        <nav>
+                            <ul>
+                                <li>
+                                    <Link to={SaveMovies}>Watch Later List</Link>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </Router>
 
                 <section className="section">
                     <h1>Random User</h1>
                       
                     <ul>
+                    
                         {!isLoading ? (
+                        
                         results.map(function(result,index) {
+                            const  { addMovie, deleteMovie};
                             const { Title, Year, imdbID, Poster } = result;
                             return (
                             <div key={index}>
@@ -145,6 +159,7 @@ class MovieList extends Component {
                                     </div>
                                     <p>{Year}</p>
                                     <p>{imdbID}</p>
+                                    
                                     <hr />
                                </div>
                             </div>
