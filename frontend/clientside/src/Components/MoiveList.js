@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import SaveMovies from './SavedMovies'
-
+import {BrowserRouter as Route, Router, Link} from "react-router-dom";
 
 
 const Button = styled.button`
@@ -44,7 +44,8 @@ class MovieList extends Component {
             isloading: true,
             search: " ",
             results: [],
-            error: null
+            error: null,
+            
         };
         
     }
@@ -93,27 +94,11 @@ class MovieList extends Component {
 
     render(){
                
-        const{ isLoading,results} = this.state;
+        const{ isLoading,results, location} = this.state;
        
         return(
 
             <div>
-                
-                <table style={{
-                    backgroundColor: '#000',
-                    display: 'block',
-                    color: '#fff',
-                   
-                }}>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <h1>MovieDB Search</h1>
-                                
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
 
                 
                 <form className="form" id="addItemForm" onSubmit={this.onSubmit}>
@@ -128,18 +113,7 @@ class MovieList extends Component {
                         </Button>
                 </form>
                 
-                <Router>
-                    <div>
-                        <nav>
-                            <ul>
-                                <li>
-                                    <Link to={SaveMovies}>Watch Later List</Link>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </Router>
-
+                
                 <section className="section">
                     <h1>Random User</h1>
                       
@@ -148,7 +122,7 @@ class MovieList extends Component {
                         {!isLoading ? (
                         
                         results.map(function(result,index) {
-                            const  { addMovie, deleteMovie};
+                            
                             const { Title, Year, imdbID, Poster } = result;
                             return (
                             <div key={index}>

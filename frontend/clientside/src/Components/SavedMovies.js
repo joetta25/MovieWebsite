@@ -1,30 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
+import {BrowserRouter as Route, Router, Link, withRouter} from "react-router-dom";
 
+ const SaveMovies = (props) => {
+console.log(props);
 
-class SaveMovies extends Component {
-
-    state = {
+    return (<h2> What will you watch today?</h2>
         
-        favoriteMovie : [{}]
-    }
-
-
-
-
-
-    render() {
-
-        return (
-
-            <div className="List">
-                <h2>What Movie will you watch next?</h2>
-
-            </div>
+       
+        
+        
+        
+        
         )
-    }
-
 }
 
 
+;
 
-export default SaveMovies;
+
+
+export default withRouter(SaveMovies);

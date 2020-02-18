@@ -1,5 +1,8 @@
 import React from 'react';
 import MovieList from './Components/MoiveList'
+import {BrowserRouter as Route, Router, Link, withRouter, Switch} from "react-router-dom";
+import SaveMovies from './Components/SavedMovies'
+import NavBar from "./Components/Navbar"
 
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
@@ -16,15 +19,21 @@ body {
 
 function App() {
   return (
-
-    <ThemeProvider theme={{ fontfamily: 'Helvetica Neue'}}>
+    <Router>
+      <ThemeProvider theme={{ fontfamily: 'Helvetica Neue'}}>
       <React.Fragment>
-          <GlobalStyles blackcolor/>
+            <GlobalStyles blackcolor/>
+            <Switch>
+              <Route path="/" component={MovieList}></Route>
+              <Route path="/savedmovies" component={SaveMovies}></Route>
+            </Switch>
+           
 
-          <MovieList/>
-    </React.Fragment>
-    </ThemeProvider>
-    
+      </React.Fragment>
+      </ThemeProvider>
+      
+    </Router>
+   
     
   );
 }
