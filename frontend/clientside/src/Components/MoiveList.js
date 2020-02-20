@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import SaveMovies from './SavedMovies'
-import {BrowserRouter as Route, Router, Link} from "react-router-dom";
+
 
 
 const Button = styled.button`
@@ -26,11 +26,19 @@ padding-top: 6px;
 
 const Input = styled.input`
 margin-top: 50px;
-margin-right: 5px;
+margin-right: 20px;
+margin-left:30%;
+text-align: center;
 width: 25%;
-padding-right: 10px;
+padding-right: 50px;
 padding-top: 12px;
 color: black;
+`;
+
+
+const Header = styled.h1`
+
+text-align: center;
 `;
 
 
@@ -115,7 +123,7 @@ class MovieList extends Component {
                 
                 
                 <section className="section">
-                    <h1>Random User</h1>
+                    
                       
                     <ul>
                     

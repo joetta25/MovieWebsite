@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Route, Router, Link, withRouter} from "react-router-dom";
+
 
  const SaveMovies = (props) => {
 console.log(props);
@@ -19,4 +19,4 @@ console.log(props);
 
 
 
-export default withRouter(SaveMovies);
+export default SaveMovies;

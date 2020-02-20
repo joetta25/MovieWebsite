@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import MovieList from './Components/MoiveList'
-import {BrowserRouter as Route, Router, Link, withRouter, Switch} from "react-router-dom";
+import AppBar from '@material-ui/core/AppBar';
+
+
 import SaveMovies from './Components/SavedMovies'
 import NavBar from "./Components/Navbar"
 
@@ -17,25 +19,22 @@ body {
 `;
 
 
-function App() {
-  return (
-    <Router>
-      <ThemeProvider theme={{ fontfamily: 'Helvetica Neue'}}>
-      <React.Fragment>
-            <GlobalStyles blackcolor/>
-            <Switch>
-              <Route path="/" component={MovieList}></Route>
-              <Route path="/savedmovies" component={SaveMovies}></Route>
-            </Switch>
-           
+class App extends Component {
 
-      </React.Fragment>
-      </ThemeProvider>
-      
-    </Router>
-   
-    
-  );
+  render() {
+
+
+    return (
+
+      <div className="App">
+        <NavBar/>
+        <br/>
+        <br/>
+        <MovieList/>
+
+      </div>
+    );
+  }
 }
 
 export default App;
